@@ -48,12 +48,12 @@
     gtk3
     gtk-layer-shell
     pango
-    gdk-pixbuf2
+    gdk-pixbuf
     libdbusmenu-gtk3
     cairo
-    glib2
+    glib
     glibc
-    gcc-libs
+    gcc
   ];
 
   qt.enable = true;
