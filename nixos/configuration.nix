@@ -13,7 +13,7 @@
   services.xserver.xkb.layout = "us";
   services.xserver.windowManager.i3.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
-  services.picom.enable = true;
+  services.picom.enable = { enable = true; configFile = "/home/guidxa/.config/picom/picom.conf"; };
   services.pipewire = { enable = true; alsa.enable = true; pulse.enable = true; };
 
   networking.hostName = "nixbtw";
