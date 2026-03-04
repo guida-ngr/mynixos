@@ -1,7 +1,5 @@
 { config, lib, pkgs, ... }:
-
-{
-  imports = [ ./hardware-configuration.nix ];
+{ imports = [ ./hardware-configuration.nix ];
 
   system.stateVersion = "25.11";
   nixpkgs.config.allowUnfree = true;
@@ -85,7 +83,9 @@
         "media.gmp-widevinecdm.enabled" = true;
         "extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
         "browser.uidensity" = 1;
-      };};};
+      };
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     neovim git tree jq unzip coreutils
