@@ -69,6 +69,12 @@ bindsym $mod+space floating toggle
 bindsym $mod+Shift+space focus mode_toggle
 # drag window
 floating_modifier $mod
+# classes
+for_window [app_id="float"] {
+    floating enable
+    resize set 800 500
+    move position center
+}
 
 #  keybinds  #
 # sys
@@ -83,6 +89,7 @@ bindsym $mod+F3 exec kitty -e nvim ~/.config/quickshell
 bindsym $mod+F5 exec kitty -e nvim ~/.bashrc
 # app
 bindsym $mod+Return exec kitty
+bindsym $mod+Shift+Return exec kitty --class float
 bindsym $mod+s exec wofi --show drun
 bindsym $mod+d exec kitty -e ranger
 bindsym $mod+p exec kooha
