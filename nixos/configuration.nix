@@ -2,67 +2,71 @@
 { imports = [ ./hardware-configuration.nix ];
 
   system.stateVersion = "25.11";
+  system.saveSystemConfiguration = true;
   nixpkgs.config.allowUnfree = true;
 
+  # boot/driver
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.kernelModules = [ "amdgpu" ];
   hardware.graphics = { enable = true; enable32Bit = true; };
-
+  hardware.gpu.amd.updateMicrocode = true;
+  # network
+  networking.hostName = "nixbtw";
+  networking.networkmanager.enable = true;
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+  # geo
+  time.timeZone = "America/Sao_Paulo";
+  i18n.defaultLocale = "en_US.UTF-8";
+  console.keyMap = "us";
+  # WM
   programs.sway = {
     enable = true;
     package = pkgs.swayfx;
     extraPackages = with pkgs; [
-      swww
       swaylock
       swayidle
       xwayland
     ];
   };
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
-  services.pipewire = { enable = true; alsa.enable = true; pulse.enable = true; };
-  networking.hostName = "nixbtw";
-  networking.networkmanager.enable = true;
-
-  time.timeZone = "America/Sao_Paulo";
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  services.greetd = {
+  # DM
+  services.displayManager.ly = {
     enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd sway";
-        user = "greeter";
-      };
-    };
+    settings.save = true;
   };
-
-  systemd.services.greetd.serviceConfig = {
-    Type = "idle";
-    StandardInput = "tty";
-    StandardOutput = "tty";
-    StandardError = "journal";
-    TTYReset = true;
-    TTYVHangup = true;
-    TTYVTDisallocate = true;
+  services.displayManager.defaultSession = "sway";
+  # audio
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
   };
-
+  # users
   users.users.guidxa = {
     isNormalUser = true;
     extraGroups = [ "wheel" "video" "audio" "networkmanager" ];
     packages = with pkgs; [
+      kitty
       quickshell
       autotiling
       wofi
-      kitty
+      swww
       firefox
       obsidian
       ranger
+    ] ++ [
+      unzip
+      wl-clipboard
       kooha
+      grim
+      slurp
+      playerctl
+      networkmanagerapplet
     ];
   };
-
+  # pkgs
   programs.firefox = {
     enable = true;
     languagePacks = [ "pt-BR" "en-US" ];
@@ -86,13 +90,19 @@
       };
     };
   };
-
   environment.systemPackages = with pkgs; [
-    neovim git tree jq unzip coreutils
+    neovim
+    git
+    jq
+    killall
+    tree
+    coreutils
+    usbutils
   ];
-
+  # fonts
   fonts.packages = with pkgs; [
     open-sans
     nerd-fonts.caskaydia-cove
+    nerd-fonts.jetbrains-mono
   ];
 }
