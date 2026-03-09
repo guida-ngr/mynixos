@@ -93,6 +93,7 @@
   environment.systemPackages = with pkgs; [
     neovim
     git
+    curl
     jq
     killall
     tree
