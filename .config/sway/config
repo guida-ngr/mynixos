@@ -90,9 +90,10 @@ bindsym $mod+F5 exec kitty -e nvim ~/.bashrc
 # app
 bindsym $mod+Return exec kitty
 bindsym $mod+Shift+Return exec kitty --class float
-bindsym $mod+s exec wofi --show drun
-bindsym $mod+d exec kitty -e ranger
+bindsym $mod+d exec wofi --show drun
+bindsym $mod+s exec kitty -e ranger
 bindsym $mod+p exec kooha
+bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy
 bindsym $mod+f exec firefox
 bindsym $mod+o exec obsidian
 
