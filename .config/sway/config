@@ -33,11 +33,13 @@ bindsym $mod+Shift+6 move container to workspace number $ws6
 bindsym $mod+Shift+7 move container to workspace number $ws7
 
 #  window  #
-# gaps
-gaps inner 9
-# border
+# appearance
 default_border none
-corner_radius 5
+gaps inner     9
+corner_radius  5
+blur           enable
+blur_passes    3
+blur_radius    5
 # resize window
 bindsym $mod+Shift+z mode "resize"
 mode "resize" {
