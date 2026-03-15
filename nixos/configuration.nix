@@ -64,25 +64,34 @@
   # users
   users.users.guidxa = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "networkmanager" ];
+    extraGroups = [ "wheel" "video" "audio" "networkmanager" "kvm" ];
     packages = with pkgs; [
+      inputs.quickshell.packages.${pkgs.system}.default
       autotiling
       kitty
       wofi swww fastfetch btop
       firefox obsidian sioyek
-      ranger kdePackages.dolphin
-      inputs.quickshell.packages.${pkgs.system}.default
+      ranger ueberzugpp imagemagick
+      android-studio
+      prismlauncher
     ] ++ [
       networkmanagerapplet
-      pulseaudio pavucontrol
-      unzip
+      pavucontrol
       vlc
       kooha
       wl-clipboard grim slurp
       playerctl
+    ] ++ [
+      wineWow64Packages.stable
+      winetricks
+      bottles 
+      mangohud 
+      protonup-qt
     ];
   };
-  # pkgs
+
+  ## pkgs ##
+  # browser
   programs.firefox = {
     enable = true;
     languagePacks = [ "pt-BR" "en-US" ];
@@ -106,6 +115,7 @@
       };
     };
   };
+  # spicetify
   programs.spicetify =
   let
     spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
@@ -115,10 +125,13 @@
     enabledExtensions = with spicePkgs.extensions; [ adblock shuffle hidePodcasts ];
     theme = spicePkgs.themes.lucid;
   };
+  # environment
   environment.systemPackages = with pkgs; [
     neovim git curl
-    jq killall tree
-    coreutils usbutils
+    jq zulu17 zulu21
+    killall tree
+    coreutils usbutils unzip unrar
+    pulseaudio
   ];
   # fonts
   fonts.packages = with pkgs; [
